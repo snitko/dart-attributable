@@ -13,11 +13,6 @@ class DummyClass extends Object with Attributable, Validatable {
     'caption' : (attr_name, self) => self.attribute_callbacks_called.add('caption')
   };
 
-  final Map validations = {
-    'attr1' : { 'isLessThan'   : 10 },
-    'attr2' : { 'isLongerThan' : 5  }
-  };
-
   noSuchMethod(Invocation i) {
     var result = prvt_noSuchGetterOrSetter(i);
     if(result != false)
@@ -77,5 +72,16 @@ main() {
     dummy.updateAttributes({ 'some_associated_object.caption' : 'new caption'});
   });
 
+  test('runs callbacks on attributes after updating them in bulk', () {
+    var dummy = new DummyClass();
+    dummy.updateAttributes({ 'caption' : 'new caption' });
+    expect(dummy.attribute_callbacks_called.contains('caption'), isTrue);
+  });
+
+  test('doesn\'t run callbacks on attributes after updating them in bulk if closure evaluates to false', () {
+    var dummy = new DummyClass();
+    dummy.updateAttributes({ 'caption' : 'new caption' }, () => false);
+    expect(dummy.attribute_callbacks_called.contains('caption'), isFalse);
+  });
 
 }

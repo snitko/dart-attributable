@@ -40,8 +40,11 @@ abstract class Attributable {
     return !(attributes[attr_name] == old_attribute_values[attr_name]);
   }
 
-  /* Updates all registered attributes and runs validations afterwards (if Validation mixin is included) */
-  updateAttributes(Map new_values) {
+  /* Updates registered attributes with values provided, then run callbacks on them.
+     Optionally, one can provide a function to be run after the attributes are set. If this
+     function evalutes to false, no callbacks would be run (useful in validations).
+  */
+  updateAttributes(Map new_values, [func = null]) {
 
     var changed_attrs = [];
 
@@ -55,15 +58,14 @@ abstract class Attributable {
       }
     });
 
-    // This validatable piece is currently commented out
-    // and should probably not be here. It should be up to the user of
-    // the library to include it (probably using callbacks provided by
-    // attributable).
-    /*if(this is Validatable) {*/
-      /*validate();*/
-      /*if(valid)*/
-        /*changed_attrs.forEach((attr_name) => invokeAttributeCallback(attr_name));*/
-    /*}*/
+    if(func == null || func()) {
+      new_values.forEach((k,v) {
+        invokeAttributeCallback(k);
+      });
+      return true;
+    } else {
+      return false;
+    }
 
   }
 
