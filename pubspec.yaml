@@ -1,0 +1,12 @@
+name: attributable
+version: 0.1.0
+description: >
+  Allows to create getters and setters for attributes
+  on a model, as well as callbacks for them.
+
+author: Roman Snitko <roman.snitko@gmail.com>
+
+dev_dependencies:
+  unittest: any
+  validatable:
+    path: '../validatable/'
