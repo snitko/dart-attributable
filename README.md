@@ -8,6 +8,8 @@ Usage
 
 A simple example may look like this:
 
+    import 'package:attributable';
+
     class Button extends Object with Attributable {
 
       final List attribute_names = ['caption', 'color', 'enabled'];
@@ -57,7 +59,7 @@ manually in your class, so that it looks something like the following:
     }
 
 The Invocation object gets passed into the `prvt_noSuchGetterOrSetter(i)`
-which then checks if any attribute with such a name is defined on the class.
+which then checks if any attribute with such a name are defined on the class.
 If not, then we return control to your class and it gets to call its original
 `noSuchMethod()` method, which, most likely, will generate an exception.
 Of course, if your class has its own `noSuchMethod()` functionality, you'd have
