@@ -52,7 +52,7 @@ manually in your class, so that it looks something like the following:
 
     noSuchMethod(Invocation i) {  
       var result = prvt_noSuchGetterOrSetter(i);
-      if(result)
+      if(result != null)
         return result;
       else
         super(i);
