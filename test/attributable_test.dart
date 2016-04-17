@@ -1,4 +1,3 @@
-import 'package:unittest/unittest.dart';
 import 'dart:mirrors';
 import 'package:validatable/validatable.dart';
 import '../lib/attributable.dart';
