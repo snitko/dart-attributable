@@ -51,11 +51,11 @@ abstract class into your class, you also have to define `noSuchMethod()` callbac
 manually in your class, so that it looks something like the following:
 
     noSuchMethod(Invocation i) {  
-      var result = prvt_noSuchGetterOrSetter(i);
-      if(result != null)
-        return result;
-      else
-        super(i);
+      try {
+        return prvt_noSuchGetterOrSetter(i);
+      } on NoSuchAttributeException {
+        super.noSuchMethod(i);
+      }
     }
 
 The Invocation object gets passed into the `prvt_noSuchGetterOrSetter(i)`

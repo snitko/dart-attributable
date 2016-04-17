@@ -1,6 +1,11 @@
 library attributable;
 import 'dart:mirrors';
 
+class NoSuchAttributeException implements Exception {
+  String cause;
+  NoSuchAttributeException(this.cause);
+}
+
 /**
   * Allows you to easily define getters/setters for attributes on your class
   * and invoke callbacks when those attributes change.
@@ -97,7 +102,7 @@ abstract class Attributable {
       get_me_old_value = true;
     }
 
-    if(!attribute_names.contains(attr_name)) { return false; }
+    if(!attribute_names.contains(attr_name)) { throw new NoSuchAttributeException("No attribute `$attr_name` was found in $this"); }
 
     if(i.isSetter) {
       old_attribute_values[attr_name] = attributes[attr_name];
