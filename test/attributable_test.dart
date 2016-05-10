@@ -1,13 +1,13 @@
-import 'dart:mirrors';
-import 'package:validatable/validatable.dart';
-import '../lib/attributable.dart';
+import "package:test/test.dart";
+import "dart:mirrors";
+import "../lib/attributable.dart";
 
-class DummyClass extends Object with Attributable, Validatable {
+class DummyClass extends Object with Attributable {
 
   List attribute_callbacks_called = [];
 
   final List attribute_names     = ['caption', 'title', 'attr1', 'attr2'];
-  final List attribute_callbacks = {
+  final Map  attribute_callbacks = {
     'default' : (attr_name, self) => self.attribute_callbacks_called.add('default'),
     'caption' : (attr_name, self) => self.attribute_callbacks_called.add('caption')
   };
@@ -84,3 +84,4 @@ main() {
   });
 
 }
+

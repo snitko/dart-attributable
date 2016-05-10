@@ -7,6 +7,4 @@ description: >
 author: Roman Snitko <roman.snitko@gmail.com>
 
 dev_dependencies:
-  validatable:
-    path: '../validatable/'
   test: '>=0.12.0'
