@@ -5,6 +5,7 @@ description: >
   on a model, as well as callbacks for them.
 
 author: Roman Snitko <roman.snitko@gmail.com>
+homepage: https://github.com/snitko/dart-attributable
 
 dev_dependencies:
   test: '>=0.12.0'
