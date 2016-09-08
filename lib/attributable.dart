@@ -29,6 +29,11 @@ abstract class Attributable {
   /// getters and setters for them.
   final List attribute_names = [];
 
+  /// Sometimes we want to set attributes to their default value.
+  /// the #setDefaultAttributeValues does exactly for each attribute name and value listed
+  /// in this property.
+  final Map default_attribute_values = {};
+
   /**
    * Invokes a callback for a given attribute. If no callback for that specific attribute is defined,
    * invokes a callback named `default` (if that one is defined, of course).
@@ -80,6 +85,9 @@ abstract class Attributable {
 
   }
 
+  void setDefaultAttributeValues() {
+    this.default_attribute_values.forEach((k,v) => this.attributes[k] = v);
+  }
 
   /**
    * THIS IS A PRIVATE METHOD!

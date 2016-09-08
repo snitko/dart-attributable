@@ -6,7 +6,8 @@ class DummyClass extends Object with Attributable {
 
   List attribute_callbacks_called = [];
 
-  final List attribute_names     = ['caption', 'title', 'attr1', 'attr2'];
+  final List attribute_names          = ['caption', 'title', 'attr1', 'attr2', 'attr3'];
+  final Map default_attribute_values = { 'attr3' : 'default_value'};
   final Map  attribute_callbacks = {
     'default' : (attr_name, self) => self.attribute_callbacks_called.add('default'),
     'caption' : (attr_name, self) => self.attribute_callbacks_called.add('caption')
@@ -82,6 +83,12 @@ main() {
     dummy.updateAttributes({ 'caption' : 'new caption' }, () => false);
     expect(dummy.attribute_callbacks_called.contains('caption'), isFalse);
   });
+
+  test("sets default values for attributes", () {
+    dummy.setDefaultAttributeValues();
+    expect(dummy.attr3, equals("default_value"));
+  });
+  
 
 }
 
