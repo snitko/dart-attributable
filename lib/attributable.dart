@@ -62,6 +62,9 @@ abstract class Attributable {
    */
   updateAttributes(Map new_values, [func = null]) {
 
+    if(new_values == null)
+      return;
+
     var changed_attrs = [];
 
     new_values.forEach((k,v) { 
