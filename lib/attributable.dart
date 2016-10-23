@@ -89,7 +89,10 @@ abstract class Attributable {
   }
 
   void setDefaultAttributeValues() {
-    this.default_attribute_values.forEach((k,v) => this.attributes[k] = v);
+    this.default_attribute_values.forEach((k,v) {
+      if(this.attributes[k] == null)
+        this.attributes[k] = v;
+    });
   }
 
   /**
