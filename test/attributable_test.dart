@@ -80,13 +80,21 @@ main() {
 
   test('doesn\'t run callbacks on attributes after updating them in bulk if closure evaluates to false', () {
     var dummy = new DummyClass();
-    dummy.updateAttributes({ 'caption' : 'new caption' }, () => false);
+    dummy.updateAttributes({ 'caption' : 'new caption' }, callback: () => false);
     expect(dummy.attribute_callbacks_called.contains('caption'), isFalse);
   });
 
   test("sets default values for attributes", () {
     dummy.setDefaultAttributeValues();
     expect(dummy.attr3, equals("default_value"));
+  });
+
+  test("throws error if attribute doesn't exist and someone tries to update it with updateAttributes()", () {
+    expect(() => dummy.updateAttributes({ 'non_existent_attr' : 'new caption' }), throws);
+  });
+
+  test("doesn't throw error if attribute doesn't exist but `ingore_non_existent: true` is passed to updateAttributes()", () {
+    expect(() => dummy.updateAttributes({ 'non_existent_attr' : 'new caption' }, ignore_non_existent: true), returnsNormally);
   });
   
 

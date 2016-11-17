@@ -57,10 +57,14 @@ abstract class Attributable {
 
   /**
    * Updates registered attributes with values provided, then run callbacks on them.
-   * Optionally, one can provide a function to be run after the attributes are set. If this
-   * function evalutes to false, no callbacks would be run (useful in validations).
+   * Optionally, one can provide a function to be run after the attributes
+   * are set (`callback` attribute). If this function evalutes to false, no callbacks
+   * would be run (useful in validations).
+   *
+   * If ignore_non_existent is set to true, it will not raise error while trying
+   * to update non-existent attributes.
    */
-  updateAttributes(Map new_values, [func = null]) {
+  updateAttributes(Map new_values, { callback: null, ignore_non_existent: false }) {
 
     if(new_values == null)
       return;
@@ -73,11 +77,12 @@ abstract class Attributable {
         changed_attrs.add(k);
       } else if(k.contains('.')) { /* do nothing */ 
       } else {
-        throw Exception('$this doesn\'t have attribute \'$k\'');
+        if(!ignore_non_existent)
+          throw Exception('$this doesn\'t have attribute \'$k\'');
       }
     });
 
-    if(func == null || func()) {
+    if(callback == null || callback()) {
       new_values.forEach((k,v) {
         invokeAttributeCallback(k);
       });
