@@ -113,11 +113,11 @@ abstract class Attributable {
   */
   prvt_noSuchGetterOrSetter(Invocation i) {
     
-    var attr_name = MirrorSystem.getName(i.memberName).replaceFirst(new RegExp('='), '');
+    var attr_name = MirrorSystem.getName(i.memberName).replaceFirst('=', '');
 
     var get_me_old_value = false;
-    if(attr_name.contains(new RegExp(r'^_old_'))) {
-      attr_name        = attr_name.replaceFirst(new RegExp(r'^_old_'), '');
+    if(attr_name.startsWith('_old_')) {
+      attr_name        = attr_name.replaceFirst('_old_', '');
       get_me_old_value = true;
     }
 
