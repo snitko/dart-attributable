@@ -82,7 +82,9 @@ abstract class Attributable {
       }
     });
 
-    if(callback == null || callback()) {
+    if(callback == false)
+      return;
+    else if(callback == null || callback()) {
       new_values.forEach((k,v) {
         invokeAttributeCallback(k);
       });
@@ -112,7 +114,7 @@ abstract class Attributable {
    * noSuchMethod() callback in your class.
   */
   prvt_noSuchGetterOrSetter(Invocation i) {
-    
+
     var attr_name = MirrorSystem.getName(i.memberName).replaceFirst(new RegExp('='), '');
 
     var get_me_old_value = false;
