@@ -49,10 +49,13 @@ abstract class Attributable {
   /**
    * Checks whether a given attribute had a previous value different from the current one.
    */
-  hasAttributeChanged(attr_name) {
+  hasAttributeChanged(attr_name, { ignore_null: false }) {
     if(!attribute_names.contains(attr_name))
       throw new Exception("No attribute `$attr_name` was found in $this");
-    return !(attributes[attr_name] == old_attribute_values[attr_name]);
+    if(ignore_null)
+      return (attributes[attr_name] != old_attribute_values[attr_name] && old_attribute_values[attr_name] != null);
+    else
+      return (attributes[attr_name] != old_attribute_values[attr_name]);
   }
 
   /**
@@ -73,6 +76,7 @@ abstract class Attributable {
 
     new_values.forEach((k,v) { 
       if(attribute_names.contains(k)) {
+        prvt_setOldValue(k, attributes[k]);
         attributes[k] = v;
         changed_attrs.add(k);
       } else if(k.contains('.')) { /* do nothing */ 
@@ -126,8 +130,8 @@ abstract class Attributable {
     if(!attribute_names.contains(attr_name)) { throw new NoSuchAttributeException("No attribute `$attr_name` was found in $this"); }
 
     if(i.isSetter) {
-      old_attribute_values[attr_name] = attributes[attr_name];
-      attributes[attr_name]           = i.positionalArguments[0];
+      prvt_setOldValue(attr_name, attributes[attr_name]);
+      attributes[attr_name] = i.positionalArguments[0];
       invokeAttributeCallback(attr_name);
       return true;
     } else {
@@ -136,6 +140,10 @@ abstract class Attributable {
       else
         return attributes[attr_name];
     }
+  }
+
+  prvt_setOldValue(attr_name, value) {
+    old_attribute_values[attr_name] = value;
   }
 
 

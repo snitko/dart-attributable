@@ -49,6 +49,8 @@ main() {
     dummy.title   = 'Title 1';
     dummy.title   = 'Title 2';
     expect(dummy._old_title, equals('Title 1'));
+    dummy.updateAttributes({ "title" : "Title 3"});
+    expect(dummy._old_title, equals('Title 2'));
   });
 
   test('tells if new value is different from the old one', () {
